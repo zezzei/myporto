@@ -1,0 +1,206 @@
+/* =========================================
+   1. SETUP GLOBAL & VARIABEL
+   Kita simpan warna di sini agar mudah diganti nanti
+   ========================================= */
+:root {
+  --primary-color: #0ea5e9;   /* Warna biru langit cerah untuk aksen */
+  --bg-light: #f0f9ff;        /* Warna biru sangat muda untuk background selingan */
+  --text-dark: #333333;       /* Warna teks utama (bukan hitam pekat agar elegan) */
+  --text-light: #64748b;      /* Warna teks sekunder/deskripsi */
+  --white: #ffffff;           /* Warna putih murni */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Efek bayangan halus */
+}
+
+/* Reset CSS dasar agar tampilan konsisten di semua browser */
+* {
+  margin: 0;                  /* Menghapus jarak luar bawaan browser */
+  padding: 0;                 /* Menghapus jarak dalam bawaan browser */
+  box-sizing: border-box;     /* Memastikan padding tidak menambah lebar elemen */
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font modern yang aman */
+  line-height: 1.6;           /* Jarak antar baris teks agar mudah dibaca */
+  color: var(--text-dark);    /* Menggunakan variabel warna teks */
+  background-color: var(--white);
+}
+
+/* Membungkus konten agar tidak terlalu lebar di layar laptop besar */
+.container {
+  max-width: 1200px;          /* Lebar maksimal konten */
+  margin: 0 auto;             /* Posisi tengah otomatis (kiri-kanan) */
+  padding: 0 20px;            /* Memberi jarak aman di sisi kiri dan kanan */
+}
+
+/* =========================================
+   2. NAVIGASI (Navbar)
+   Menggunakan Flexbox agar logo dan menu berseberangan
+   ========================================= */
+nav {
+  display: flex;              /* Mengaktifkan mode Flexbox layout */
+  justify-content: space-between; /* Logo di kiri, Menu di kanan mentok */
+  align-items: center;        /* Posisi vertikal elemen agar di tengah */
+  background-color: var(--white); /* Latar belakang putih */
+  padding: 1.5rem 5%;         /* Jarak dalam (atas-bawah 1.5rem, kiri-kanan 5%) */
+  box-shadow: var(--shadow);  /* Memberi bayangan halus di bawah navbar */
+  position: sticky;           /* Navbar tetap menempel saat discroll */
+  top: 0;                     /* Posisi nempel di paling atas */
+  z-index: 1000;              /* Pastikan navbar selalu di atas elemen lain */
+}
+
+nav .logo {
+  font-size: 1.5rem;          /* Ukuran font logo besar */
+  font-weight: bold;          /* Huruf tebal */
+  color: var(--primary-color);/* Warna logo biru */
+}
+
+nav ul {
+  display: flex;              /* Menu list berjejer ke samping */
+  list-style: none;           /* Menghilangkan titik bullet point */
+  gap: 2rem;                  /* Jarak antar menu */
+}
+
+nav a {
+  text-decoration: none;      /* Menghilangkan garis bawah link */
+  color: var(--text-dark);    /* Warna teks menu */
+  font-weight: 500;           /* Ketebalan huruf sedang */
+  transition: color 0.3s;     /* Efek transisi halus saat warna berubah */
+}
+
+nav a:hover {
+  color: var(--primary-color);/* Warna berubah biru saat kursor di atasnya */
+}
+
+/* =========================================
+   3. HERO SECTION
+   Bagian paling atas yang menyambut pengunjung
+   ========================================= */
+.hero {
+  text-align: center;         /* Teks rata tengah */
+  padding: 100px 20px;        /* Ruang napas yang luas di atas dan bawah */
+  background-color: var(--bg-light); /* Latar biru sangat muda */
+}
+
+.hero h1 {
+  font-size: 3rem;            /* Judul sangat besar */
+  margin-bottom: 1rem;        /* Jarak ke teks di bawahnya */
+  color: var(--primary-color);/* Judul berwarna biru */
+}
+
+.hero p {
+  font-size: 1.2rem;          /* Ukuran teks deskripsi */
+  color: var(--text-light);   /* Warna abu-abu lembut */
+  max-width: 600px;           /* Membatasi lebar teks agar tidak terlalu panjang */
+  margin: 0 auto 2rem auto;   /* Posisi tengah dan jarak bawah 2rem */
+}
+
+.btn-cta {
+  display: inline-block;      /* Agar tombol bisa diberi padding/margin */
+  background-color: var(--primary-color); /* Warna tombol biru */
+  color: var(--white);        /* Teks tombol putih */
+  padding: 12px 30px;         /* Ukuran tombol (tebal dan lebar) */
+  border-radius: 50px;        /* Membuat sudut tombol membulat (pil) */
+  text-decoration: none;      /* Hapus garis bawah */
+  font-weight: bold;          /* Teks tebal */
+  transition: transform 0.3s; /* Efek animasi saat ditekan/hover */
+}
+
+.btn-cta:hover {
+  transform: translateY(-3px);/* Tombol sedikit naik saat di-hover */
+  opacity: 0.9;               /* Sedikit transparan */
+}
+
+/* =========================================
+   4. ABOUT SECTION
+   ========================================= */
+.about {
+  padding: 80px 20px;         /* Jarak atas bawah standar untuk section */
+  text-align: center;         /* Rata tengah */
+}
+
+.about h2 {
+  font-size: 2rem;            /* Ukuran judul section */
+  margin-bottom: 2rem;        /* Jarak ke konten */
+}
+
+/* =========================================
+   5. PROYEK (CSS GRID)
+   Ini bagian penting agar kartu sejajar rapi
+   ========================================= */
+.projects {
+  padding: 80px 20px;
+  background-color: var(--bg-light); /* Selang-seling warna background */
+}
+
+.projects h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Container Grid untuk kartu */
+.project-grid {
+  display: grid;              /* Mengaktifkan sistem Grid */
+  /* Rumus Ajaib Grid Responsif: */
+  /* Membuat kolom otomatis, minimal lebar 300px, maksimal memenuhi ruang sisa */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;                  /* Jarak antar kartu (selokan) */
+  max-width: 1200px;          /* Lebar maksimal grid */
+  margin: 0 auto;             /* Posisi tengah */
+}
+
+/* Desain Kartu Proyek */
+.card {
+  background: var(--white);   /* Kartu putih di atas background biru muda */
+  padding: 2rem;              /* Jarak isi kartu ke tepi kartu */
+  border-radius: 12px;        /* Sudut kartu membulat */
+  box-shadow: var(--shadow);  /* Bayangan agar kartu terlihat "melayang" */
+  transition: transform 0.3s ease; /* Animasi halus */
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Efek kartu naik saat di-hover */
+}
+
+.card h3 {
+  margin-bottom: 1rem;        /* Jarak judul ke deskripsi */
+}
+
+/* =========================================
+   6. MEDSOS (Social Media)
+   ========================================= */
+.medsos {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.medsos-links {
+  display: flex;              /* Jejerkan icon ke samping */
+  justify-content: center;    /* Posisi di tengah */
+  gap: 1.5rem;                /* Jarak antar icon */
+  margin-top: 1.5rem;
+}
+
+.medsos a {
+  padding: 10px 20px;
+  border: 1px solid var(--primary-color); /* Garis pinggir biru */
+  border-radius: 5px;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.medsos a:hover {
+  background-color: var(--primary-color); /* Background jadi biru */
+  color: var(--white);        /* Teks jadi putih */
+}
+
+/* =========================================
+   7. FOOTER
+   ========================================= */
+footer {
+  background-color: var(--primary-color); /* Footer blok biru penuh */
+  color: var(--white);        /* Teks putih */
+  text-align: center;         /* Teks tengah */
+  padding: 2rem;              /* Tinggi footer */
+  margin-top: auto;           /* Memastikan footer di bawah jika konten sedikit */
+}
