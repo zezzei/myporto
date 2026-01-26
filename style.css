@@ -1,218 +1,429 @@
-/* =========================================
-   1. SETUP GLOBAL & VARIABEL
-   Kita atur 'kamus warna' di sini.
-   ========================================= */
-:root {
-  --primary: #0ea5e9;       /* Sky Blue cerah */
-  --primary-dark: #0284c7;  /* Sky Blue agak gelap untuk hover */
-  --secondary: #e0f2fe;     /* Biru sangat muda untuk background */
-  --white: #ffffff;
-  --text-dark: #334155;     /* Abu tua (lebih enak dibaca drpd hitam pekat) */
-  --text-light: #64748b;    /* Abu sedang */
-  --shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.15); /* Bayangan biru halus */
-  --radius: 12px;           /* Lengkungan sudut elemen */
-}
-
-/* Reset dasar agar tampilan rapi di semua browser */
+/* Reset dasar untuk menghilangkan margin dan padding default browser, memastikan konsistensi di semua browser */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth; /* Agar saat klik menu, scroll-nya halus */
+  box-sizing: border-box; /* Memastikan padding dan border tidak menambah ukuran elemen */
 }
 
+/* Styling untuk body: Mengatur font dasar, warna background putih untuk tema light, dan warna teks gelap untuk kontras yang baik, mirip tema VSCode light */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--white);
-  color: var(--text-dark);
-  line-height: 1.6;
-  overflow-x: hidden; /* Mencegah scroll ke samping */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font mirip VSCode untuk kesan modern */
+  background-color: #ffffff; /* Putih sebagai background utama untuk tema light */
+  color: #1e1e1e; /* Gelap untuk teks agar mudah dibaca */
+  line-height: 1.6; /* Jarak antar baris untuk keterbacaan yang lebih baik */
+  font-size: 16px; /* Ukuran font standar untuk laptop */
+  animation: fadeIn 1s ease-in-out; /* Animasi fade-in saat halaman load untuk efek masuk yang halus */
 }
 
-/* Mengatur jarak konten utama */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Definisi keyframe untuk animasi fadeIn: Dari transparan ke solid */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Mulai dari transparan */
+  }
+  to {
+    opacity: 1; /* Berakhir solid */
+  }
 }
 
-/* Menghilangkan text 'zena' di atas jika itu tidak sengaja */
-body > p:first-child {
-  display: none; 
-}
-
-/* =========================================
-   2. NAVIGASI (Navbar)
-   ========================================= */
+/* Styling untuk header: Membuat header sebagai container utama navigasi dengan background sky blue lembut */
 header {
-  background-color: rgba(255, 255, 255, 0.95); /* Putih agak transparan */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: sticky; /* Nempel di atas saat discroll */
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(10px); /* Efek blur di belakang navbar (keren!) */
+  background-color: #e0f2fe; /* Sky blue terang untuk header, memberikan nuansa light theme */
+  padding: 1rem 0; /* Padding atas dan bawah untuk ruang bernapas */
+  position: sticky; /* Membuat header tetap di atas saat scroll, untuk navigasi yang mudah diakses */
+  top: 0; /* Menempel di bagian atas viewport */
+  z-index: 100; /* Memastikan header di atas elemen lain */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow ringan untuk kedalaman */
+  animation: slideDown 0.5s ease-out; /* Animasi slide down saat load */
 }
 
+/* Definisi keyframe untuk animasi slideDown: Dari atas ke posisi normal */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%); /* Mulai dari atas */
+  }
+  to {
+    transform: translateY(0); /* Berakhir di posisi normal */
+  }
+}
+
+/* Styling untuk nav: Menggunakan flexbox untuk menyusun logo dan menu secara horizontal */
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1rem 20px;
+  display: flex; /* Flexbox untuk layout horizontal */
+  justify-content: space-between; /* Logo di kiri, menu di kanan */
+  align-items: center; /* Vertikal center untuk keselarasan */
+  max-width: 1200px; /* Lebar maksimal untuk tampilan laptop, mencegah terlalu lebar */
+  margin: 0 auto; /* Center secara horizontal */
+  padding: 0 2rem; /* Padding kiri dan kanan untuk ruang */
 }
 
-/* Styling Logo Text */
+/* Styling untuk logo: Membuat logo menonjol dengan warna dan ukuran */
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--text-dark);
+  font-size: 1.8rem; /* Ukuran font besar untuk visibilitas */
+  font-weight: bold; /* Tebal untuk penekanan */
+  color: #1e1e1e; /* Gelap untuk kontras */
 }
 
 .logo span {
-  color: var(--primary); /* Kata 'Porto' jadi biru */
+  color: #00bfff; /* Sky blue untuk bagian "Porto" agar menarik */
 }
 
+/* Styling untuk ul (list menu): Menghilangkan bullet dan menggunakan flexbox untuk horizontal */
 nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
+  list-style: none; /* Menghilangkan bullet points */
+  display: flex; /* Flexbox untuk menu horizontal */
+  gap: 2rem; /* Jarak antar item menu */
 }
 
+/* Styling untuk li (item menu): Menghapus dekorasi default link */
+nav li {
+  /* Tidak ada styling khusus, tapi memungkinkan hover di bawah */
+}
+
+/* Styling untuk link di menu: Warna gelap, tanpa underline, dengan efek hover dan animasi */
 nav a {
-  text-decoration: none;
-  color: var(--text-dark);
-  font-weight: 600;
-  transition: color 0.3s;
-  position: relative;
-}
-
-/* Animasi garis bawah saat hover menu */
-nav a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: var(--primary);
-  transition: width 0.3s;
+  color: #1e1e1e; /* Gelap untuk teks link */
+  text-decoration: none; /* Menghilangkan underline default */
+  font-weight: 500; /* Sedikit tebal untuk keterbacaan */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transisi halus untuk efek hover dan animasi */
 }
 
 nav a:hover {
-  color: var(--primary);
+  color: #00bfff; /* Sky blue saat hover untuk interaktivitas */
+  transform: scale(1.05); /* Sedikit zoom saat hover untuk efek dinamis */
 }
 
-nav a:hover::after {
-  width: 100%; /* Garis memanjang saat hover */
-}
-
-/* =========================================
-   3. HERO SECTION (Halaman Depan)
-   ========================================= */
+/* Styling untuk section hero: Background putih, padding untuk ruang, dan flexbox untuk layout dengan animasi */
 .hero {
-  display: flex; /* Konten kiri, Gambar kanan */
-  align-items: center;
-  justify-content: space-between;
-  padding: 100px 20px;
-  max-width: 1100px;
-  margin: 0 auto;
-  min-height: 80vh; /* Tinggi minimal 80% layar */
+  background-color: #ffffff; /* Putih untuk konsistensi tema light */
+  padding: 4rem 2rem; /* Padding atas/bawah dan kiri/kanan untuk ruang */
+  display: flex; /* Flexbox untuk menyusun konten dan gambar secara horizontal */
+  justify-content: space-between; /* Konten di kiri, gambar di kanan */
+  align-items: center; /* Vertikal center */
+  max-width: 1200px; /* Lebar maksimal untuk laptop */
+  margin: 0 auto; /* Center */
+  min-height: 80vh; /* Tinggi minimum untuk hero yang menarik */
+  animation: fadeInUp 1s ease-out 0.5s both; /* Animasi fade-in dari bawah dengan delay */
 }
 
+/* Definisi keyframe untuk animasi fadeInUp: Dari bawah dan transparan ke solid */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Mulai dari bawah */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Berakhir di posisi normal */
+  }
+}
+
+/* Styling untuk konten hero: Mengatur teks dan tombol */
 .hero-content {
-  flex: 1; /* Mengambil ruang sisa */
-  padding-right: 2rem;
-  /* Animasi Masuk */
-  animation: slideUp 1s ease-out;
+  flex: 1; /* Mengambil ruang yang tersedia */
+  max-width: 50%; /* Lebar maksimal agar tidak terlalu lebar */
 }
 
-.hero h1 {
-  font-size: 3.5rem;
-  color: var(--primary);
-  margin: 10px 0;
-  line-height: 1.2;
+.hero-content p:first-child {
+  font-size: 1.2rem; /* Ukuran untuk salam */
+  color: #4a5568; /* Abu-abu gelap untuk kontras lembut */
 }
 
-.hero p {
-  color: var(--text-light);
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  max-width: 500px;
+.hero-content h1 {
+  font-size: 3rem; /* Ukuran besar untuk judul utama */
+  margin: 1rem 0; /* Margin atas dan bawah */
+  color: #1e1e1e; /* Gelap */
+  animation: bounceIn 1s ease-out 1s both; /* Animasi bounce untuk judul */
 }
 
-/* Tombol Keren */
+/* Definisi keyframe untuk animasi bounceIn: Efek bounce masuk */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hero-content p:nth-child(3) {
+  font-size: 1.1rem; /* Ukuran untuk deskripsi */
+  margin-bottom: 2rem; /* Margin bawah sebelum tombol */
+  color: #4a5568; /* Abu-abu gelap */
+}
+
+/* Styling untuk tombol hero: Desain tombol modern dengan background sky blue dan animasi */
 .btn-hero {
-  display: inline-block;
-  background-color: var(--primary);
-  color: var(--white);
-  padding: 12px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); /* Glow biru */
-  transition: transform 0.3s, background-color 0.3s;
+  display: inline-block; /* Inline-block untuk tombol */
+  background-color: #00bfff; /* Sky blue untuk tombol */
+  color: #ffffff; /* Teks putih */
+  padding: 0.8rem 1.5rem; /* Padding dalam tombol */
+  text-decoration: none; /* Tanpa underline */
+  border-radius: 5px; /* Sudut melengkung untuk modern */
+  font-weight: bold; /* Tebal */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transisi hover */
+  animation: pulse 2s infinite; /* Animasi pulse untuk menarik perhatian */
 }
 
 .btn-hero:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-3px); /* Tombol naik dikit */
+  background-color: #0099cc; /* Sky blue lebih gelap saat hover */
+  transform: translateY(-2px); /* Efek angkat saat hover */
 }
 
-.hero-logo {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  animation: fadeIn 1.5s ease-out; /* Animasi muncul pelan */
+/* Definisi keyframe untuk animasi pulse: Efek denyut */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
+/* Styling untuk gambar hero: Membuat gambar responsif dan bulat dengan animasi */
 .hero-logo img {
-  width: 100%;
-  max-width: 350px;
-  border-radius: 50%; /* Membuat gambar jadi bulat */
-  border: 5px solid var(--secondary); /* Bingkai biru muda */
-  /* Animasi gambar melayang-layang */
-  animation: float 3s ease-in-out infinite;
+  max-width: 300px; /* Lebar maksimal untuk laptop */
+  width: 100%; /* Responsif */
+  height: auto; /* Mempertahankan rasio */
+  border-radius: 50%; /* Bulat untuk tampilan modern */
+  border: 5px solid #00bfff; /* Border sky blue untuk aksen */
+  animation: rotateIn 1s ease-out 1.5s both; /* Animasi rotate masuk */
 }
 
-/* =========================================
-   4. ABOUT SECTION
-   ========================================= */
+/* Definisi keyframe untuk animasi rotateIn: Rotasi masuk */
+@keyframes rotateIn {
+  from {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Styling untuk section about: Background sky blue lembut, padding untuk ruang, dengan animasi */
 .about {
-  padding: 80px 20px;
-  text-align: center;
+  background-color: #f0f9ff; /* Sky blue sangat terang untuk variasi */
+  color: #1e1e1e; /* Teks gelap untuk kontras */
+  padding: 4rem 2rem; /* Padding */
+  max-width: 1200px; /* Lebar maksimal */
+  margin: 0 auto; /* Center */
+  animation: fadeInLeft 1s ease-out 2s both; /* Animasi fade-in dari kiri */
 }
 
+/* Definisi keyframe untuk animasi fadeInLeft: Dari kiri dan transparan */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Styling untuk judul h2 di about: Ukuran dan margin */
 .about h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--primary);
+  font-size: 2.5rem; /* Ukuran besar untuk judul */
+  margin-bottom: 2rem; /* Margin bawah */
+  text-align: center; /* Center */
+  color: #1e1e1e; /* Gelap */
 }
 
-.about-content {
-  max-width: 800px;
-  margin: 0 auto;
-  background: var(--secondary); /* Kotak biru muda */
-  padding: 3rem;
-  border-radius: var(--radius);
-  border-left: 5px solid var(--primary); /* Aksen garis di kiri */
-}
-
+/* Styling untuk konten about: Mengatur paragraf */
 .about-content p {
-  margin-bottom: 1rem;
+  font-size: 1.1rem; /* Ukuran font */
+  margin-bottom: 1.5rem; /* Jarak antar paragraf */
+  line-height: 1.8; /* Jarak baris untuk keterbacaan */
 }
 
-strong {
-  color: var(--primary); /* Kata penting jadi biru */
-}
-
-/* =========================================
-   5. PROYEK (GRID SYSTEM)
-   ========================================= */
+/* Styling untuk section proyek: Background putih, padding, dengan animasi */
 .proyek {
-  padding: 80px 20px;
+  background-color: #ffffff; /* Putih */
+  color: #1e1e1e; /* Gelap */
+  padding: 4rem 2rem; /* Padding */
+  max-width: 1200px; /* Lebar maksimal */
+  margin: 0 auto; /* Center */
+  animation: fadeInRight 1s ease-out 2.5s both; /* Animasi fade-in dari kanan */
 }
 
+/* Definisi keyframe untuk animasi fadeInRight: Dari kanan dan transparan */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Styling untuk judul h2 di proyek: Sama seperti about */
 .proyek h2 {
-  text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem; /* Ukuran */
+  margin-bottom: 2rem; /* Margin */
+  text-align: center; /* Center */
+  color: #1e1e1e; /* Gelap */
+}
+
+/* Styling untuk grid proyek: Menggunakan CSS Grid untuk kartu yang sejajar */
+.proyek-grid {
+  display: grid; /* Grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Kolom otomatis, minimal 300px, untuk responsivitas */
+  gap: 2rem; /* Jarak antar kartu */
+}
+
+/* Styling untuk kartu proyek: Background sky blue lembut, border radius, shadow untuk modern, dengan animasi hover */
+.proyek-card {
+  background-color: #e0f2fe; /* Sky blue terang */
+  color: #1e1e1e; /* Teks gelap */
+  text-decoration: none; /* Tanpa underline */
+  border-radius: 10px; /* Sudut melengkung */
+  overflow: hidden; /* Memotong elemen yang keluar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk kedalaman */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transisi hover */
+  animation: zoomIn 0.5s ease-out; /* Animasi zoom masuk untuk setiap kartu */
+}
+
+.proyek-card:hover {
+  transform: translateY(-5px) scale(1.02); /* Efek angkat dan zoom saat hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow lebih besar */
+}
+
+/* Definisi keyframe untuk animasi zoomIn: Zoom masuk */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Styling untuk gambar di kartu proyek: Lebar penuh, tinggi tetap */
+.proyek-card img {
+  width: 100%; /* Lebar penuh */
+  height: 200px; /* Tinggi tetap untuk konsistensi */
+  object-fit: cover; /* Memotong gambar agar pas */
+}
+
+/* Styling untuk info kartu proyek: Padding untuk teks */
+.proyek-info {
+  padding: 1rem; /* Padding dalam */
+}
+
+.proyek-info h3 {
+  font-size: 1.5rem; /* Ukuran judul kartu */
+  margin-bottom: 0.5rem; /* Margin bawah */
+  color: #1e1e1e; /* Gelap */
+}
+
+.proyek-info p {
+  font-size: 1rem; /* Ukuran deskripsi */
+  color: #4a5568; /* Abu-abu untuk deskripsi */
+}
+
+/* Styling untuk section medsos: Background sky blue lembut, padding, dengan animasi */
+.medsos {
+  background-color: #f0f9ff; /* Sky blue sangat terang */
+  color: #1e1e1e; /* Teks gelap */
+  padding: 4rem 2rem; /* Padding */
+  max-width: 1200px; /* Lebar maksimal */
+  margin: 0 auto; /* Center */
+  animation: fadeInUp 1s ease-out 3s both; /* Animasi fade-in dari bawah dengan delay lebih lama */
+}
+
+/* Styling untuk judul h2 di medsos: Sama seperti sebelumnya */
+.medsos h2 {
+  font-size: 2.5rem; /* Ukuran */
+  margin-bottom: 2rem; /* Margin */
+  text-align: center; /* Center */
+  color: #1e1e1e; /* Gelap */
+}
+
+/* Styling untuk list medsos: Flexbox untuk horizontal */
+.medsos-list {
+  display: flex; /* Flexbox */
+  justify-content: center; /* Center secara horizontal */
+  gap: 2rem; /* Jarak antar item */
+}
+
+/* Styling untuk item medsos: Flexbox untuk gambar dan teks, tanpa underline, dengan animasi hover */
+.medsos-item {
+  display: flex; /* Flexbox untuk item */
+  align-items: center; /* Vertikal center */
+  text-decoration: none; /* Tanpa underline */
+  color: #1e1e1e; /* Teks gelap */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transisi hover */
+  animation: fadeIn 0.5s ease-out; /* Animasi fade-in untuk item */
+}
+
+.medsos-item:hover {
+  color: #00bfff; /* Sky blue saat hover */
+  transform: rotate(5deg); /* Efek rotasi saat hover untuk fun */
+}
+
+/* Styling untuk gambar di medsos: Ukuran tetap */
+.medsos-item img {
+  width: 40px; /* Lebar */
+  height: 40px; /* Tinggi */
+  margin-right: 0.5rem; /* Margin kanan */
+}
+
+/* Styling untuk footer: Background sky blue, teks gelap, center, dengan animasi */
+footer {
+  background-color: #e0f2fe; /* Sky blue terang */
+  color: #1e1e1e; /* Gelap */
+  text-align: center; /* Center teks */
+  padding: 1rem 0; /* Padding atas dan bawah */
+  font-size: 0.9rem; /* Ukuran kecil */
+  animation: slideUp 0.5s ease-out 3.5s both; /* Animasi slide up dari bawah */
+}
+
+/* Definisi keyframe untuk animasi slideUp: Dari bawah ke atas */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Media query untuk responsivitas di layar kecil (meskipun fokus laptop, ini untuk fleksibilitas) */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column; /* Vertikal di mobile */
+    text-align: center; /* Center teks */
+  }
+  .hero-content {
+    max-width: 100%; /* Lebar penuh */
+  }
+  nav ul {
+    flex-direction: column; /* Menu vertikal di mobile */
+    gap: 1rem; /* Jarak lebih kecil */
+  }
+  .proyek-grid {
+    grid-template-columns: 1fr; /* Satu kolom di mobile */
+  }
+  .medsos-list {
+    flex-direction: column; /* Vertikal di mobile */
+  }
+}
