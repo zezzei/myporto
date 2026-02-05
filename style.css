@@ -1,5 +1,5 @@
 /* =========================================
-   PENGATURAN DASAR & VARIABEL
+   PENGATURAN DASAR & RESET
    ========================================= */
 * {
     margin: 0;
@@ -21,44 +21,45 @@
 body {
     background-color: var(--black);
     color: var(--white);
-    overflow-x: hidden; /* Penting: agar elemen yang muncul dari kanan tidak bikin scroll samping */
+    overflow-x: hidden; /* Mencegah scroll horizontal saat animasi slide-in */
 }
 
-/* Menghilangkan teks "zena" mentah */
+/* Menghilangkan teks "zena" mentah di HTML */
 body > p:first-child { display: none; }
 
 /* =========================================
-   ANIMASI SCROLL (MURNI CSS)
+   ANIMASI SCROLL (SLIDE-IN)
    ========================================= */
-@keyframes slideFromRight {
-    from { opacity: 0; transform: translateX(100px); }
-    to { opacity: 1; transform: translateX(0); }
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9); /* Gerak dari bawah ke atas */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-@keyframes slideFromLeft {
-    from { opacity: 0; transform: translateX(-100px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* Base class untuk deteksi scroll */
-.container, .about-content, .proyek-card, .medsos-item {
-    view-timeline-name: --revealing-image;
+/* Menerapkan animasi slide saat scroll pada setiap section */
+section {
+    view-timeline-name: --scroll-reveal;
     view-timeline-axis: block;
-    animation-range: entry 10% cover 30%; /* Animasi jalan saat elemen mulai muncul 10% di layar */
-    animation-fill-mode: both;
+    animation: slideIn linear both;
+    animation-timeline: --scroll-reveal;
+    animation-range: entry 10% cover 30%;
 }
 
 /* =========================================
-   NAVIGASI MODERN
+   NAVIGASI (HEADER)
    ========================================= */
 header {
-    background-color: rgba(10, 10, 10, 0.9);
-    padding: 20px 10%;
+    background-color: rgba(10, 10, 10, 0.95);
+    padding: 15px 10%;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(150, 126, 118, 0.1);
 }
 
@@ -69,13 +70,13 @@ nav {
 }
 
 .logo {
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .logo span { color: var(--coca-mocha); }
 
-nav ul { display: flex; list-style: none; gap: 30px; }
+nav ul { display: flex; list-style: none; gap: 25px; }
 
 nav ul li a {
     color: var(--text-gray);
@@ -87,84 +88,94 @@ nav ul li a {
 nav ul li a:hover { color: var(--coca-mocha); }
 
 /* =========================================
-   HERO SECTION (SENTRALISASI)
+   HERO SECTION (SENTRALISASI LOGO & TEKS)
    ========================================= */
 .hero {
     height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Menyusun vertikal */
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 10%;
+    padding-top: 80px;
     background: radial-gradient(circle, #1e1a18 0%, #0a0a0a 100%);
 }
 
+/* LOGO BULAT & MENGAMBANG */
 @keyframes floating {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
     100% { transform: translateY(0px); }
 }
 
-.hero-logo { margin-bottom: 30px; }
+.hero-logo {
+    order: 1; /* Pastikan logo di atas */
+    margin-bottom: 40px; /* Jarak antara logo dan teks */
+}
 
 .hero-logo img {
     width: 200px;
     height: 200px;
-    border-radius: 50%;
+    border-radius: 50%; /* Bulat sempurna */
     border: 4px solid var(--coca-mocha);
     object-fit: cover;
     animation: floating 4s ease-in-out infinite;
-    box-shadow: 0 0 30px rgba(150, 126, 118, 0.4);
+    box-shadow: 0 10px 30px rgba(150, 126, 118, 0.3);
+}
+
+/* TULISAN DI BAWAH LOGO */
+.hero-content {
+    order: 2; /* Teks di bawah logo */
+}
+
+.hero-content p:first-child {
+    color: var(--coca-mocha);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
 }
 
 .hero-content h1 {
-    font-size: clamp(3rem, 10vw, 5rem);
-    font-weight: 900;
+    font-size: 4rem;
     margin-bottom: 15px;
     color: var(--white);
 }
 
+.hero-content p:nth-child(3) {
+    color: var(--text-gray);
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
 .btn-hero {
-    padding: 15px 40px;
+    display: inline-block;
+    padding: 12px 35px;
     background: var(--coca-mocha);
     color: var(--black);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: bold;
     border-radius: 50px;
-    transition: 0.4s;
-    display: inline-block;
+    transition: 0.3s;
+}
+
+.btn-hero:hover {
+    background: var(--white);
+    transform: scale(1.05);
 }
 
 /* =========================================
-   ABOUT (SLIDE FROM LEFT)
+   PROYEK (GELAP-TERANG, 3D, & KUDA)
    ========================================= */
-.about { 
-    padding: 100px 10%; 
-    animation-name: slideFromLeft;
-}
-
-.about-content {
-    background: #111;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    border-bottom: 4px solid var(--coca-mocha);
-}
-
-/* =========================================
-   PROYEK (SLIDE FROM RIGHT + INTERAKSI)
-   ========================================= */
-.proyek { 
-    padding: 100px 10%; 
-    animation-name: slideFromRight; /* Judul proyek slide dari kanan */
+.proyek {
+    padding: 100px 10%;
 }
 
 .proyek-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    perspective: 1000px;
+    perspective: 1000px; /* Ruang untuk efek 3D */
 }
 
 .proyek-card {
@@ -175,42 +186,71 @@ nav ul li a:hover { color: var(--coca-mocha); }
     position: relative;
     border: 1px solid #222;
     transition: all 0.5s ease;
-    animation-name: slideFromRight; /* Setiap kartu slide dari kanan */
 }
 
-/* Efek Terang & 3D (Fitur sebelumnya) */
+/* Status Gelap (Default) */
 .proyek-card img {
-    width: 100%; height: 220px; object-fit: cover;
-    filter: grayscale(100%) brightness(0.4);
-    transition: 0.6s;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.4); /* Hitam putih & gelap */
+    transition: 0.6s ease;
 }
 
+.proyek-info {
+    padding: 25px;
+    background: var(--card-dark);
+    transition: 0.5s;
+}
+
+.proyek-info h3 { color: var(--coca-mocha); margin-bottom: 5px; }
+.proyek-info p { color: var(--text-gray); font-size: 0.9rem; }
+
+/* Status Terang & 3D saat Memilih (Hover) */
 .proyek-card:hover {
-    transform: rotateY(10deg) translateY(-10px);
+    transform: rotateY(15deg) rotateX(5deg) translateY(-10px); /* Efek 3D miring */
     border-color: var(--coca-mocha);
+    box-shadow: 0 15px 40px rgba(150, 126, 118, 0.2);
 }
 
-.proyek-card:hover img { filter: grayscale(0%) brightness(1.2); }
+.proyek-card:hover img {
+    filter: grayscale(0%) brightness(1.2); /* Menjadi berwarna & terang */
+}
 
-.proyek-card:hover .proyek-info { background: var(--coca-mocha); }
+.proyek-card:hover .proyek-info {
+    background: var(--coca-mocha); /* Background kartu berubah warna */
+}
 
 .proyek-card:hover .proyek-info h3,
-.proyek-card:hover .proyek-info p { color: var(--black); }
+.proyek-card:hover .proyek-info p {
+    color: var(--black); /* Teks berubah kontras jadi hitam */
+}
 
-/* Emoji Kuda */
+/* Fitur Emoji Kuda saat Memilih */
 .proyek-card:hover::after {
     content: '🐎';
-    position: absolute; top: 20px; right: 20px;
-    font-size: 2rem;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2.5rem;
+    z-index: 5;
+    animation: slideIn 0.3s ease;
 }
 
 /* =========================================
-   MEDSOS (SLIDE FROM LEFT)
+   ABOUT & MEDSOS
    ========================================= */
-.medsos { 
-    padding: 80px 10%; 
-    animation-name: slideFromLeft;
+.container { padding: 80px 10%; text-align: center; }
+
+.about-content {
+    background: #111;
+    padding: 40px;
+    border-radius: 20px;
+    line-height: 1.8;
+    border-bottom: 4px solid var(--coca-mocha);
 }
+
+.about-content strong { color: var(--coca-mocha); }
 
 .medsos-list {
     display: flex;
@@ -226,11 +266,12 @@ nav ul li a:hover { color: var(--coca-mocha); }
     flex-direction: column;
     align-items: center;
     transition: 0.3s;
-    animation-name: slideFromLeft;
 }
 
-.medsos-item:hover { color: var(--coca-mocha); transform: translateY(-5px); }
-.medsos-item img { width: 45px; margin-bottom: 10px; }
+.medsos-item img { width: 45px; margin-bottom: 10px; transition: 0.3s; }
+
+.medsos-item:hover { color: var(--coca-mocha); }
+.medsos-item:hover img { transform: rotate(15deg) scale(1.1); }
 
 /* =========================================
    FOOTER
@@ -240,4 +281,11 @@ footer {
     text-align: center;
     border-top: 1px solid #222;
     color: var(--text-gray);
+    font-size: 0.8rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.5rem; }
+    nav ul { display: none; }
 }
