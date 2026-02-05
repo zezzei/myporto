@@ -1,79 +1,73 @@
 /* =========================================
-   PENGATURAN DASAR (RESET)
+   PENGATURAN DASAR
    ========================================= */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Memastikan padding tidak merusak lebar elemen */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    scroll-behavior: smooth; /* Efek scroll halus saat klik menu navigasi */
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
 }
 
 :root {
-    /* Variabel Warna: Black & Coca Mocha */
-    --black: #1a1a1a;
-    --coca-mocha: #967e76; /* Warna cokelat kopi yang estetik */
-    --coca-light: #d7ccc8;
-    --white: #ffffff;
-    --gray-bg: #f4f4f4;
+    --bg-black: #0f0f0f;       /* Hitam pekat modern */
+    --card-black: #1a1a1a;     /* Hitam kartu */
+    --coca-mocha: #967e76;     /* Warna utama Coca Mocha */
+    --coca-accent: #b49a91;    /* Mocha yang lebih terang untuk hover */
+    --text-main: #f5f5f5;      /* Putih tulang agar tidak silau */
+    --text-muted: #a0a0a0;     /* Abu-abu untuk teks pendukung */
 }
 
 body {
-    background-color: var(--white);
-    color: var(--black);
-    line-height: 1.6;
+    background-color: var(--bg-black);
+    color: var(--text-main);
+    line-height: 1.7;
 }
 
-/* Menghilangkan teks "zena" di paling atas agar lebih rapi */
-body > p:first-child {
-    display: none;
-}
+/* Menghilangkan teks "zena" mentah di HTML */
+body > p:first-child { display: none; }
 
 /* =========================================
-   NAVIGASI (HEADER)
+   NAVIGASI MINIMALIS
    ========================================= */
 header {
-    background-color: var(--black);
-    padding: 1rem 10%;
-    position: fixed; /* Navigasi tetap di atas saat di-scroll */
+    background-color: rgba(15, 15, 15, 0.95);
+    padding: 20px 10%;
+    position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(150, 126, 118, 0.2); /* Garis tipis warna mocha */
 }
 
 nav {
     display: flex;
-    justify-content: space-between; /* Logo di kiri, menu di kanan */
+    justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
 }
 
 .logo span {
-    color: var(--coca-mocha); /* Memberi aksen warna pada logo */
+    color: var(--coca-mocha);
 }
 
 nav ul {
     display: flex;
     list-style: none;
-}
-
-nav ul li {
-    margin-left: 20px;
+    gap: 30px;
 }
 
 nav ul li a {
-    color: var(--white);
+    color: var(--text-muted);
     text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 500;
-    transition: 0.3s; /* Efek halus saat kursor menyentuh link */
+    transition: 0.3s;
 }
 
 nav ul li a:hover {
@@ -81,209 +75,190 @@ nav ul li a:hover {
 }
 
 /* =========================================
-   HERO SECTION (HOME)
+   HERO SECTION (TANPA BG IMAGE)
    ========================================= */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80') no-repeat center/cover;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
+    text-align: center;
     padding: 0 10%;
-    color: var(--white);
-    padding-top: 80px;
+    background: radial-gradient(circle at center, #1a1513 0%, #0f0f0f 100%); /* Gradasi halus ke mocha tua */
+}
+
+.hero-content p:first-child {
+    color: var(--coca-mocha);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
 .hero-content h1 {
-    font-size: 4rem;
-    color: var(--coca-mocha);
-    margin: 10px 0;
+    font-size: clamp(3rem, 8vw, 5rem); /* Ukuran teks menyesuaikan layar */
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #ffffff, var(--coca-mocha));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Teks gradasi */
 }
 
-.hero-content p {
-    font-size: 1.1rem;
-    max-width: 500px;
-    margin-bottom: 20px;
+.hero-content p:nth-child(3) {
+    max-width: 600px;
+    color: var(--text-muted);
+    margin: 0 auto 30px;
 }
 
 .hero-logo img {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%; /* Membuat foto profil bulat */
-    border: 5px solid var(--coca-mocha);
+    width: 150px;
+    height: 150px;
+    border-radius: 20px; /* Model kotak tumpul (squircle) */
+    border: 2px solid var(--coca-mocha);
+    margin-top: 30px;
     object-fit: cover;
-    box-shadow: 0 0 20px rgba(150, 126, 118, 0.5);
+    filter: grayscale(20%);
 }
 
 .btn-hero {
-    display: inline-block;
-    padding: 12px 30px;
+    padding: 15px 35px;
     background-color: var(--coca-mocha);
-    color: var(--white);
+    color: var(--bg-black);
     text-decoration: none;
-    border-radius: 5px;
-    transition: 0.3s ease;
+    font-weight: 700;
+    border-radius: 50px; /* Model pill */
+    transition: 0.4s;
 }
 
 .btn-hero:hover {
-    background-color: #7d6861;
-    transform: translateY(-3px);
+    background-color: var(--coca-accent);
+    box-shadow: 0 0 25px rgba(150, 126, 118, 0.4);
+    transform: translateY(-2px);
 }
 
 /* =========================================
-   CONTAINER & TYPOGRAPHY
-   ========================================= */
-.container {
-    padding: 80px 10%;
-    text-align: center;
-}
-
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
-}
-
-h2::after {
-    content: '';
-    width: 50%;
-    height: 3px;
-    background: var(--coca-mocha);
-    position: absolute;
-    bottom: -10px;
-    left: 25%;
-}
-
-/* =========================================
-   ABOUT SECTION
+   BAGIAN ABOUT
    ========================================= */
 .about {
-    background-color: var(--white);
+    padding: 100px 10%;
+}
+
+.about h2 {
+    color: var(--coca-mocha);
+    margin-bottom: 30px;
 }
 
 .about-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-    background: var(--gray-bg);
-    padding: 30px;
-    border-left: 5px solid var(--coca-mocha);
-    border-radius: 10px;
+    background: var(--card-black);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(150, 126, 118, 0.1);
 }
 
-.about-content p {
-    margin-bottom: 15px;
+.about-content strong {
+    color: var(--coca-mocha);
 }
 
 /* =========================================
-   PROYEK SECTION (GRID)
+   PROYEK (GRID MODERN)
    ========================================= */
 .proyek {
-    background-color: var(--gray-bg);
+    padding: 100px 10%;
 }
 
 .proyek-grid {
     display: grid;
-    /* Membuat 3 kolom otomatis yang responsif */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
 .proyek-card {
-    background: var(--white);
+    background: var(--card-black);
+    border-radius: 20px;
+    overflow: hidden;
     text-decoration: none;
-    color: var(--black);
-    border-radius: 15px;
-    overflow: hidden; /* Agar gambar tidak keluar dari border-radius */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: 0.4s;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid transparent;
 }
 
 .proyek-card:hover {
-    transform: translateY(-10px); /* Efek melayang saat hover */
+    transform: scale(1.03);
+    border-color: var(--coca-mocha);
 }
 
 .proyek-card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover; /* Gambar tetap proporsional */
+    height: 220px;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: 0.4s;
+}
+
+.proyek-card:hover img {
+    opacity: 1;
 }
 
 .proyek-info {
-    padding: 20px;
+    padding: 25px;
 }
 
 .proyek-info h3 {
-    color: var(--coca-mocha);
-    margin-bottom: 10px;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.proyek-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
 }
 
 /* =========================================
-   MEDSOS SECTION
+   MEDSOS & FOOTER
    ========================================= */
+.medsos {
+    padding-bottom: 100px;
+}
+
 .medsos-list {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    gap: 40px;
 }
 
 .medsos-item {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-decoration: none;
-    color: var(--black);
     transition: 0.3s;
 }
 
 .medsos-item img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 10px;
+    filter: sepia(1) saturate(0.5) brightness(0.8); /* Memberi nuansa mocha pada ikon */
 }
 
 .medsos-item:hover {
     color: var(--coca-mocha);
-    transform: scale(1.1);
 }
 
-/* =========================================
-   FOOTER
-   ========================================= */
 footer {
-    background-color: var(--black);
-    color: var(--white);
+    padding: 40px;
     text-align: center;
-    padding: 30px 0;
-    margin-top: 50px;
+    border-top: 1px solid rgba(150, 126, 118, 0.1);
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
-/* =========================================
-   RESPONSIVE (TAMPILAN HP)
-   ========================================= */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-        height: auto;
-        padding-bottom: 50px;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-logo img {
-        width: 200px;
-        height: 200px;
-        margin-bottom: 20px;
-    }
-
-    nav ul {
-        display: none; /* Kamu bisa menambahkan menu hamburger nanti */
-    }
+    nav ul { display: none; }
+    .hero-content h1 { font-size: 3rem; }
+    .proyek-grid { grid-template-columns: 1fr; }
 }
